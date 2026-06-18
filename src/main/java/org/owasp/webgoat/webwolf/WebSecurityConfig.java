@@ -66,10 +66,10 @@ public class WebSecurityConfig {
         .build();
   }
 
-  @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+ @Autowired
+public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
-  }
+}
 
   @Bean
   public UserDetailsService userDetailsServiceBean() {
