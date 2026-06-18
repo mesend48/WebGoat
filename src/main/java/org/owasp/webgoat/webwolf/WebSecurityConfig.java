@@ -66,14 +66,6 @@ public class WebSecurityConfig {
         .build();
   }
 
-@Autowired
-public void configureGlobal(AuthenticationManagerBuilder auth, DataSource dataSource) throws Exception {
-  auth.jdbcAuthentication()
-    .dataSource(dataSource)
-    .usersByUsernameQuery("SELECT * FROM users WHERE username = ?")
-    .passwordEncoder(new BCryptPasswordEncoder());
-}
-
   @Bean
   public UserDetailsService userDetailsServiceBean() {
     return userDetailsService;
