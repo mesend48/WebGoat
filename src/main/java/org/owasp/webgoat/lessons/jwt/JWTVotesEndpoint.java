@@ -52,7 +52,7 @@ import org.springframework.web.bind.annotation.RestController;
 })
 public class JWTVotesEndpoint implements AssignmentEndpoint {
 
-  public static final String JWT_PASSWORD = TextCodec.BASE64.encode("victory");
+ public static final String JWT_PASSWORD = System.getenv("JWT_VOTES_SECRET") != null ? System.getenv("JWT_VOTES_SECRET") : TextCodec.BASE64.encode("default_training_secret");
   private static String validUsers = "TomJerrySylvester";
 
   private static int totalVotes = 38929;
@@ -136,7 +136,7 @@ public class JWTVotesEndpoint implements AssignmentEndpoint {
       value.setSerializationView(Views.GuestView.class);
     } else {
       try {
-        Jwt jwt = Jwts.parser().setSigningKey(JWT_PASSWORD).parse(accessToken);
+        Jwt jwt = Jwts.parserBuilder().setSigningKey(JWT_PASSWORD).build().parseClaimsJws(accessToken);
         Claims claims = (Claims) jwt.getBody();
         String user = (String) claims.get("user");
         if ("Guest".equals(user) || !validUsers.contains(user)) {
